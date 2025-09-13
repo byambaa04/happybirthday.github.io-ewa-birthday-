@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <title>Төрсөн өдрийн мэнд, Ewa!</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff;
+      color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 800px;
+      padding: 20px;
+    }
+
+    .slide-text {
+      font-size: 1.8em;
+      opacity: 0;
+      transition: opacity 1s ease;
+      position: absolute;
+      left: 50%;
+      top: 40%;
+      transform: translate(-50%, -50%);
+    }
+
+    .visible {
+      opacity: 1;
+    }
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid #ccc;
+      border-radius: 24px;
+      padding: 10px 20px;
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      font-size: 1.2em;
+      background: #fff;
+    }
+
+    .search-icon {
+      margin-right: 10px;
+      color: gray;
+    }
+
+    .result {
+      font-size: 1.5em;
+      color: #1a73e8;
+      margin-top: 20px;
+    }
+
+    .praise {
+      font-size: 1.4em;
+      opacity: 0;
+      transition: opacity 1s ease;
+      margin-top: 10px;
+    }
+
+    .praise.visible {
+      opacity: 1;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div id="text1" class="slide-text visible">🎉 Төрсөн өдрийн мэнд, Ewa! 🎉</div>
+    <div id="text2" class="slide-text">Чи миний амьдралын гэрэл, миний аз жаргал.</div>
+    <div id="gif" class="slide-text">
+      <img src="search-style.gif" alt="Cute Gif" style="width: 200px; border-radius: 10px;">
+    </div>
+    <div id="search" class="slide-text">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <span>энэ дэлхийн хамгийн үзэсгэлэнтэй, хөөрхөн эмэгтэй хэн бэ?</span>
+      </div>
+    </div>
+    <div id="result" class="slide-text">
+      <div class="result">→ Ewa бол энэ дэлхийн хамгийн үзэсгэлэнтэй, хөөрхөн эмэгтэй!</div>
+    </div>
+    <div id="praises">
+      <div class="praise" id="p1">✨ Тэр хамгийн ухаантай эмэгтэй.</div>
+      <div class="praise" id="p2">💖 Сайхан сэтгэлтэй, нинжин зантай.</div>
+      <div class="praise" id="p3">🌟 Түүний инээмсэглэл л ертөнцийг гэрэлтүүлдэг.</div>
+      <div class="praise" id="p4">👑 Чи бол миний зүрхний хатан хаан.</div>
+    </div>
+  </div>
+
+  <!-- Хөгжим -->
+  <audio id="bgMusic" autoplay loop>
+    <source src="cover_everything.mp3" type="audio/mpeg">
+    Таны браузер дуу тоглуулахыг дэмжихгүй байна.
+  </audio>
+
+  <script>
+    const slides = ['text1', 'text2', 'gif', 'search', 'result'];
+    let current = 0;
+
+    function showNextSlide() {
+      if (current > 0) {
+        document.getElementById(slides[current - 1]).classList.remove('visible');
+      }
+      if (current < slides.length) {
+        document.getElementById(slides[current]).classList.add('visible');
+        current++;
+        setTimeout(showNextSlide, 3000); // 3 секунд тутамд
+      } else {
+        // Praise хэсгүүдийг дараалан гаргах
+        const praises = ['p1', 'p2', 'p3', 'p4'];
+        praises.forEach((id, i) => {
+          setTimeout(() => {
+            document.getElementById(id).classList.add('visible');
+          }, i * 2500); // 2.5 секунд тутамд praise гарна
+        });
+      }
+    }
+
+    window.onload = () => {
+      // Хөгжим тоглуулахын тулд хэрэглэгч дарах хэрэгтэй байж магадгүй
+      document.body.addEventListener('click', () => {
+        document.getElementById('bgMusic').play().catch(() => {});
+      }, { once: true });
+
+      setTimeout(showNextSlide, 3000);
+    };
+  </script>
+</body>
+</html>
